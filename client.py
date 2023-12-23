@@ -18,7 +18,7 @@ if uploaded_file:
         st.write("Sending image to server...")
         
         # Send image to server
-        url = 'http://localhost:9001/inbound'
+        url = 'https://detect-everything.streamlit.app/inbound'
         files = {'file': uploaded_file}
         response = requests.post(url, files=files)
         

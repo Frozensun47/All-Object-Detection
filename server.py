@@ -7,6 +7,14 @@ import matplotlib.pyplot as plt
 import base64
 from net.face import detect_objects
 
+# Get secrets from Streamlit Secrets
+secrets = st.secrets
+
+# Get host, port, and upload folder from secrets
+host = secrets['host']
+port = secrets['port']
+upload_folder = secrets['upload_folder']
+
 st.title('Image Upload App')
 
 # Server Side
@@ -15,13 +23,11 @@ st.header("Server Logs")
 if st.button("Start Server"):
     st.write("Server started. Listening for incoming requests.")
 
-    UPLOAD_FOLDER = 'data'
-    
     def get_app():
         return Flask(__name__)
 
     app = get_app()
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    app.config['UPLOAD_FOLDER'] = upload_folder
 
     @app.route('/inbound', methods=['POST'])
     def receive_image():
@@ -48,4 +54,5 @@ if st.button("Start Server"):
             return jsonify({'result_image_base64': face_base64})
 
     if __name__ == '__main__':
-        app.run(port=4747)
+        # Change host and port to use secrets
+        app.run(host=host, port=port)
