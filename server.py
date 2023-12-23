@@ -3,6 +3,7 @@ import streamlit as st
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 import os
+import threading
 import matplotlib.pyplot as plt
 import base64
 from utilities.utils import detect_objects
@@ -15,16 +16,16 @@ host = secrets['host']
 port = secrets['port']
 upload_folder = secrets['upload_folder']
 
-st.title('Image Upload App')
-# Server Side
-st.header("Server Logs")
-if st.button("Start Server"):
-    st.write("Server started. Listening for incoming requests.")
+# Create a SessionState to persist server state
+class SessionState:
+    def __init__(self, **kwargs):
+        self.__dict__.update(kwargs)
 
-    def get_app():
-        return Flask(__name__)
+# Create a SessionState to persist server state
+state = SessionState(server_running=False)
 
-    app = get_app()
+def start_server():
+    app = Flask(__name__)
     app.config['UPLOAD_FOLDER'] = upload_folder
 
     @app.route('/inbound', methods=['POST'])
@@ -51,6 +52,37 @@ if st.button("Start Server"):
             st.success(f"Image '{filename}' processed and result sent.")
             return jsonify({'result_image_base64': face_base64})
 
-    if __name__ == '__main__':
-        # Change host and port to use secrets
-        app.run(host=host, port=port)
+    app.run(host=host, port=port)
+
+def stop_server():
+    # Access the server object and stop it
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func:
+        func()
+
+# Streamlit UI
+st.title('Image Upload App')
+st.header("Server Logs")
+
+if st.button("Start Server"):
+    if not state.server_running:
+        st.write("Starting server. Listening for incoming requests.")
+        state.server_running = True
+
+        # Start the server in a separate thread
+        server_thread = threading.Thread(target=start_server)
+        server_thread.start()
+    else:
+        st.warning("Server is already running. Stop it first before starting again.")
+
+if st.button("Stop Server"):
+    if state.server_running:
+        st.write("Stopping server.")
+        state.server_running = False
+
+        # Stop the server
+        stop_server()
+
+        st.success("Server successfully stopped.")
+    else:
+        st.warning("Server is not running.")
