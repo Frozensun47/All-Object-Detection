@@ -41,11 +41,11 @@ if st.button("Start Server"):
             st.write(f"File '{filename}' received and saved.")
             st.info(f"Processing image: {filename}")
 
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
+            # file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            # file.save(file_path)
 
-            image_file = plt.imread(file_path)
-            buffer = detect_objects(image_file)
+            # image_file = plt.imread(file_path)
+            buffer = detect_objects(file)
             face_base64 = base64.b64encode(buffer).decode('utf-8')
 
             st.success(f"Image '{filename}' processed and result sent.")
