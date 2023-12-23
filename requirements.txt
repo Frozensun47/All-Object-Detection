@@ -1,8 +1,7 @@
 streamlit==1.29.0
-torch==2.1.2
-tensorflow==2.15.0
+torch
+tensorflow
 flask
 requests
 opencv-python
 transformers
-base64
