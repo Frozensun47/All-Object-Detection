@@ -1,9 +1,6 @@
 import cv2
 from transformers import DetrImageProcessor, DetrForObjectDetection
 import torch
-from PIL import Image
-import requests
-import numpy as np
 processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
 model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
     
