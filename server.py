@@ -16,10 +16,8 @@ port = secrets['port']
 upload_folder = secrets['upload_folder']
 
 st.title('Image Upload App')
-
 # Server Side
 st.header("Server Logs")
-
 if st.button("Start Server"):
     st.write("Server started. Listening for incoming requests.")
 
