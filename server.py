@@ -48,4 +48,4 @@ if st.button("Start Server"):
             return jsonify({'result_image_base64': face_base64})
 
     if __name__ == '__main__':
-        app.run(port=80)
+        app.run(port=4747)
