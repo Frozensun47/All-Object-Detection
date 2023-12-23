@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import os
 import matplotlib.pyplot as plt
 import base64
-from net.face import detect_objects
+from utilities.utils import detect_objects
 
 # Get secrets from Streamlit Secrets
 secrets = st.secrets
