@@ -3,7 +3,7 @@ import streamlit as st
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 import os
-import cv2
+import matplotlib.pyplot as plt
 import base64
 from net.face import detect_objects
 
@@ -40,13 +40,12 @@ if st.button("Start Server"):
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
 
-            image_file = cv2.imread(file_path)
-            result_image_base64 = detect_objects(image_file)
-            _, buffer = cv2.imencode('.jpg', result_image_base64)
+            image_file = plt.imread(file_path)
+            buffer = detect_objects(image_file)
             face_base64 = base64.b64encode(buffer).decode('utf-8')
 
             st.success(f"Image '{filename}' processed and result sent.")
             return jsonify({'result_image_base64': face_base64})
 
     if __name__ == '__main__':
-        app.run(debug=False, port=9001, use_reloader=False)
+        app.run(port=80)

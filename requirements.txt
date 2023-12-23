@@ -5,3 +5,4 @@ flask
 requests
 opencv-python
 transformers
+matplotlib
