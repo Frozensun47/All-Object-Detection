@@ -39,12 +39,13 @@ st.write(
     """
 )
 server_placeholder = st.empty()
+button_placeholder = st.button("🚀 Start Server")
 line_placeholder = st.empty()
 dp_placeholder = st.empty()
 content_placeholder = st.empty()
 
 # Button to start the server with styling
-if st.button("🚀 Start Server"):
+if button_placeholder:
     server_placeholder.success("Server started. Listening for incoming requests.")
     line_placeholder.markdown(
         """
@@ -65,7 +66,7 @@ if st.button("🚀 Start Server"):
             **Links:** [GitHub](https://github.com/Frozensun47) | [Portfolio](https://sites.google.com/itbhu.ac.in/sagarsrivastava/about) | [Medium](https://sagar-srivastava.medium.com/) | [Kaggle](https://www.kaggle.com/sagarsrivastava24/competitions) | [Twitter](https://twitter.com/Frozensun47)
             """
         )
-    
+
     # Flask app initialization
     def get_app():
         return Flask(__name__)
