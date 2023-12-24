@@ -27,13 +27,13 @@ st.markdown(
     """
 )
 
+st.head("[Detect Objects](https://detectobjects.streamlit.app/)")
+
 # Additional Details with styling
 st.write(
     """
     This server uses a Flask backend to perform object detection using a PyTorch transformer model, specifically the DETR (DEtection Transfomer).
-    
     The model is trained on the COCO dataset and is capable of detecting various objects in images.
-    
     To use this service, upload an image by clicking [here](https://detectobjects.streamlit.app/), and the server will provide the detected objects in the uploaded image.
     """
 )
