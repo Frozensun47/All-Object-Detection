@@ -20,10 +20,18 @@ port = st.secrets['port']
 upload_folder = st.secrets['upload_folder']
 
 # Streamlit app title
-st.title('Image Upload App')
+st.title('Server for Object Detection')
 
-# Streamlit header for server logs
-st.header("Server Logs")
+# Additional Details
+st.write(
+    """
+    This server uses a Flask backend to perform object detection using a PyTorch transformer model, specifically the DETR (DEtection Transfomer).
+    
+    The model is trained on the COCO dataset and is capable of detecting various objects in images.
+    
+    To use this service, upload an image by clicking [here](https://detectobjects.streamlit.app/), and the server will provide the detected objects in the uploaded image.
+    """
+)
 
 # Button to start the server
 if st.button("Start Server"):
@@ -70,3 +78,14 @@ if st.button("Start Server"):
     if __name__ == '__main__':
         # Run the Flask app with specified host and port
         app.run(host=host, port=port)
+
+# Footer
+st.markdown(
+    """
+    ***
+    ### About the Author
+    **Name:** Sagar Srivastava  
+    **Affiliation:** IIT BHU Varanasi  
+    **Links:** [GitHub](https://github.com/Frozensun47) | [Portfolio](https://sites.google.com/itbhu.ac.in/sagarsrivastava/about) | [Medium](https://sagar-srivastava.medium.com/) | [Kaggle](https://www.kaggle.com/sagarsrivastava24/competitions) | [Twitter](https://twitter.com/Frozensun47)
+    """
+)
