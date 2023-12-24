@@ -86,15 +86,23 @@ if st.button("🚀 Start Server"):
 
 image_url = 'https://media.licdn.com/dms/image/D4D03AQEMw8cjnd7zbQ/profile-displayphoto-shrink_400_400/0/1698397499956?e=1709164800&v=beta&t=0sbwPaWNNHLf2TyPrQVbe8KzMLBiqsqFLQ-USqL0ocs'
 
-# Display the image beside your name
-st.image(image_url, caption='Your LinkedIn Profile Picture', width=100)
-# Footer with styling
+
 st.markdown(
     """
     ***
-    ### About the Author
-    **Name:** Sagar Srivastava  
-    **Affiliation:** IIT BHU Varanasi  
-    **Links:** [GitHub](https://github.com/Frozensun47) | [Portfolio](https://sites.google.com/itbhu.ac.in/sagarsrivastava/about) | [Medium](https://sagar-srivastava.medium.com/) | [Kaggle](https://www.kaggle.com/sagarsrivastava24/competitions) | [Twitter](https://twitter.com/Frozensun47)
-    """
+"""
 )
+col1 ,col2 = st.columns(2)
+# Display the image beside your name
+with col1:
+    st.image(image_url, caption='Your LinkedIn Profile Picture', width=100)
+# Footer with styling
+with col2:
+    st.markdown(
+        """
+        ### About the Author
+        **Name:** Sagar Srivastava  
+        **Affiliation:** IIT BHU Varanasi  
+        **Links:** [GitHub](https://github.com/Frozensun47) | [Portfolio](https://sites.google.com/itbhu.ac.in/sagarsrivastava/about) | [Medium](https://sagar-srivastava.medium.com/) | [Kaggle](https://www.kaggle.com/sagarsrivastava24/competitions) | [Twitter](https://twitter.com/Frozensun47)
+        """
+    )
