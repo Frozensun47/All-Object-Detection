@@ -43,7 +43,7 @@ if uploaded_file:
         result_placeholder.write("Sending image to the server...")
 
         # Retrieve the server URL from Streamlit Secrets
-        server_url = f'{st.secrets["url"]}:{st.secrets["port"]}'
+        server_url = 'http://10.12.226.61:4747' #f'{st.secrets["url"]}:{st.secrets["port"]}'
 
         # Send the image to the server
         files = {'file': uploaded_file}

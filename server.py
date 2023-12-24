@@ -73,6 +73,11 @@ if st.button("🚀 Start Server"):
     app = get_app()
     app.config['UPLOAD_FOLDER'] = upload_folder
 
+    @app.route('/empty_get', methods=['GET'])
+    def handle_empty_get():
+        return jsonify({'message': 'This is a response to an empty GET request.'})
+
+
     # Flask route to handle incoming image uploads
     @app.route('/inbound', methods=['POST'])
     def receive_image():
