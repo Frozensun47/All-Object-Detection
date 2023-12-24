@@ -18,6 +18,7 @@ secrets = st.secrets
 host = st.secrets['host']
 port = st.secrets['port']
 upload_folder = st.secrets['upload_folder']
+image_url = 'https://media.licdn.com/dms/image/D4D03AQEMw8cjnd7zbQ/profile-displayphoto-shrink_400_400/0/1698397499956?e=1709164800&v=beta&t=0sbwPaWNNHLf2TyPrQVbe8KzMLBiqsqFLQ-USqL0ocs'
 
 # Streamlit app title with styling
 st.title('🔍 Object Detection Server')
@@ -38,6 +39,10 @@ st.write(
     """
 )
 server_placeholder = st.empty()
+line_placeholder = st.empty()
+dp_placeholder = st.empty()
+content_placeholder = st.empty()
+
 # Button to start the server with styling
 if st.button("🚀 Start Server"):
     server_placeholder.success("Server started. Listening for incoming requests.")
@@ -84,10 +89,9 @@ if st.button("🚀 Start Server"):
         # Run the Flask app with specified host and port
         app.run(host=host, port=port)
 
-image_url = 'https://media.licdn.com/dms/image/D4D03AQEMw8cjnd7zbQ/profile-displayphoto-shrink_400_400/0/1698397499956?e=1709164800&v=beta&t=0sbwPaWNNHLf2TyPrQVbe8KzMLBiqsqFLQ-USqL0ocs'
 
 
-st.markdown(
+line_placeholder.markdown(
     """
     ***
 """
@@ -95,10 +99,10 @@ st.markdown(
 col1 ,col2,col3 = st.columns((2,4,1))
 # Display the image beside your name
 with col1:
-    st.image(image_url, width=100)
+    dp_placeholder.image(image_url, width=100)
 # Footer with styling
 with col2:
-    st.markdown(
+    content_placeholder.markdown(
         """
         ### About the Author
         **Name:** Sagar Srivastava  
