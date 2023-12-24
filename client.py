@@ -14,16 +14,17 @@ st.markdown(
     Once processed, the server returns the image with detected objects highlighted.
     """
 )
-
+image_url = 'https://media.licdn.com/dms/image/D4D03AQEMw8cjnd7zbQ/profile-displayphoto-shrink_400_400/0/1698397499956?e=1709164800&v=beta&t=0sbwPaWNNHLf2TyPrQVbe8KzMLBiqsqFLQ-USqL0ocs'
 # Author Information
 st.sidebar.title('About the Author')
+st.sidebar.image(image_url, width=100)
 st.sidebar.markdown(
     """
-    **Author:** Your Name  
-    **GitHub:** [Your GitHub Profile](https://github.com/your-github-username)
+        **Name:** Sagar Srivastava  
+        **Affiliation:** IIT BHU Varanasi  
+        **Links:** [GitHub](https://github.com/Frozensun47) | [Portfolio](https://sites.google.com/itbhu.ac.in/sagarsrivastava/about) | [Medium](https://sagar-srivastava.medium.com/) | [Kaggle](https://www.kaggle.com/sagarsrivastava24/competitions) | [Twitter](https://twitter.com/Frozensun47)
     """
 )
-
 # Define the path to save the uploaded image
 save_path = 'client_data/image.jpg'
 
