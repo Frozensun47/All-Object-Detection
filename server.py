@@ -75,8 +75,7 @@ if st.button("🚀 Start Server"):
 
     @app.route('/empty_get', methods=['GET'])
     def handle_empty_get():
-        return jsonify({'message': 'This is a response to an empty GET request.'})
-
+        return "Hello! This is a response to an empty GET request from a browser."
 
     # Flask route to handle incoming image uploads
     @app.route('/inbound', methods=['POST'])
