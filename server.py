@@ -92,7 +92,7 @@ st.markdown(
     ***
 """
 )
-col1 ,col2,col3 = st.columns(3)
+col1 ,col2,col3 = st.columns((2,4,1))
 # Display the image beside your name
 with col1:
     st.image(image_url, caption='Your LinkedIn Profile Picture', width=100)
