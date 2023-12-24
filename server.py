@@ -14,9 +14,10 @@ from PIL import Image
 secrets = st.secrets
 
 # Get host, port, and upload folder from secrets
-host = "0.0.0.0"
-port = 4747
-upload_folder = "server_data"
+
+host = st.secrets['host']
+port = st.secrets['port']
+upload_folder = st.secrets['upload_folder']
 
 st.title('Image Upload App')
 
@@ -45,7 +46,7 @@ if st.button("Start Server"):
             # Update the placeholders
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            
+
             image_file = np.array(Image.open(file_path))
             processed_image = detect_objects(image_file)
             
