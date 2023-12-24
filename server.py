@@ -10,28 +10,33 @@ from io import BytesIO
 import base64
 import numpy as np
 from PIL import Image
+
 # Get secrets from Streamlit Secrets
 secrets = st.secrets
 
 # Get host, port, and upload folder from secrets
-
 host = st.secrets['host']
 port = st.secrets['port']
 upload_folder = st.secrets['upload_folder']
 
+# Streamlit app title
 st.title('Image Upload App')
 
-# Server Side
+# Streamlit header for server logs
 st.header("Server Logs")
+
+# Button to start the server
 if st.button("Start Server"):
     st.write("Server started. Listening for incoming requests.")
 
+    # Flask app initialization
     def get_app():
         return Flask(__name__)
 
     app = get_app()
     app.config['UPLOAD_FOLDER'] = upload_folder
 
+    # Flask route to handle incoming image uploads
     @app.route('/inbound', methods=['POST'])
     def receive_image():
         if 'file' not in request.files:
@@ -42,28 +47,26 @@ if st.button("Start Server"):
             return jsonify({'error': 'No selected file'})
 
         if file:
+            # Securely save the uploaded file
             filename = secure_filename(file.filename)
-            # Update the placeholders
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
 
+            # Read the uploaded image and process it using detect_objects function
             image_file = np.array(Image.open(file_path))
             processed_image = detect_objects(image_file)
-            
+
+            # Convert processed image to PIL Image
             image = Image.fromarray(processed_image)
-            # Encode the image to base64 without decoding it to UTF-8
+
+            # Encode the processed image to base64
             buffer = BytesIO()
-            image.save(buffer, format="JPEG")  # You can change the format if your image is in a different format
+            image.save(buffer, format="JPEG")
             img_str = base64.b64encode(buffer.getvalue()).decode()
+
             # Send the processed image back to the client
             return jsonify({'image': img_str})
-                
-
-            # except Exception as e:
-            #     # Handle the exception, e.g., log the error or return an error response
-            #     st.error(f"Error processing image: {str(e)}")
-            #     return jsonify({'error': 'Image processing failed'})
 
     if __name__ == '__main__':
-        # Change host and port to use secrets
+        # Run the Flask app with specified host and port
         app.run(host=host, port=port)

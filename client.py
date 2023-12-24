@@ -26,7 +26,7 @@ if uploaded_file:
         result_placeholder.write("Sending image to server...")
 
         # Retrieve the server URL from Streamlit Secrets
-        server_url = st.secrets["server_url"]
+        server_url = f'{st.secrets["server_url"]}:{st.secrets["port"]}'
 
         # Send the image to the server
         files = {'file': uploaded_file}
