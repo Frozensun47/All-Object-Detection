@@ -2,35 +2,36 @@
 import streamlit as st
 import requests
 from PIL import Image
-import io
-import base64
-
+from io import BytesIO
+from base64 import b64decode
 st.title('Image Upload Client')
-
+save_path = 'client_data/image.jpg'
 uploaded_file = st.file_uploader("Choose an image...", type="jpg")
 
 if uploaded_file:
     st.image(uploaded_file, caption="Uploaded Image.", use_column_width=True)
     st.write("")
-
     # Add a "Send" button
     if st.button("Send"):
-        st.write("Sending image to server...")
-        
+        result_placeholder = st.empty()
+        result_placeholder.write("Sending image to server...")
         # Send image to server
-        url = 'http://10.12.173.109:5432/inbound'
+        url = 'http://192.168.0.106:4747/inbound'
         files = {'file': uploaded_file}
-        response = requests.post(url, files=files)
-        
+        response = requests.post(url, files=files, stream=True)
         if response.status_code == 200:
-            st.success("Image successfully sent to server and saved.")
-            
-            # Get the base64 image from the response
-            base64_image = response.json()['result_image_base64']
-            
-            # Display the base64 image in Streamlit
-            image = Image.open(io.BytesIO(base64.b64decode(base64_image)))
-            st.image(image, caption="Processed Image", use_column_width=True)
-            
+            # Display the processed image received from the server
+            try:
+                result_placeholder.success("Processed Image received from server")
+                img_object = Image.open(BytesIO(b64decode(response.json()['image'])))
+                st.image(img_object, caption="Processed Image", use_column_width=True)
+                # # Optionally, save the processed image locally
+                # img_object.save(save_path)
+                # print(f"Processed Image saved to {save_path}")
+            except:
+                try:
+                    result_placeholder.error(response.json()['error'])
+                except:
+                    result_placeholder.error('Client side error')
         else:
-            st.error(f"Error sending image to server. Status code: {response.status_code}")
+            print(f"Error: {response.status_code} - {response.text}")

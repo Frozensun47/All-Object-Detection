@@ -1,21 +1,25 @@
 # app.py
+import json
 import streamlit as st
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from werkzeug.utils import secure_filename
 import os
 import matplotlib.pyplot as plt
-import base64
 from utilities.utils import detect_objects
-
+from io import BytesIO
+import base64
+import numpy as np
+from PIL import Image
 # Get secrets from Streamlit Secrets
 secrets = st.secrets
 
 # Get host, port, and upload folder from secrets
-host = secrets['host']
-port = secrets['port']
-upload_folder = secrets['upload_folder']
+host = "0.0.0.0"
+port = 4747
+upload_folder = "server_data"
 
 st.title('Image Upload App')
+
 # Server Side
 st.header("Server Logs")
 if st.button("Start Server"):
@@ -38,18 +42,26 @@ if st.button("Start Server"):
 
         if file:
             filename = secure_filename(file.filename)
-            st.write(f"File '{filename}' received and saved.")
-            st.info(f"Processing image: {filename}")
-
+            # Update the placeholders
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
+            
+            image_file = np.array(Image.open(file_path))
+            processed_image = detect_objects(image_file)
+            
+            image = Image.fromarray(processed_image)
+            # Encode the image to base64 without decoding it to UTF-8
+            buffer = BytesIO()
+            image.save(buffer, format="JPEG")  # You can change the format if your image is in a different format
+            img_str = base64.b64encode(buffer.getvalue()).decode()
+            # Send the processed image back to the client
+            return jsonify({'image': img_str})
+                
 
-            image_file = plt.imread(file_path)
-            buffer = detect_objects(file)
-            face_base64 = base64.b64encode(buffer).decode('utf-8')
-
-            st.success(f"Image '{filename}' processed and result sent.")
-            return jsonify({'result_image_base64': face_base64})
+            # except Exception as e:
+            #     # Handle the exception, e.g., log the error or return an error response
+            #     st.error(f"Error processing image: {str(e)}")
+            #     return jsonify({'error': 'Image processing failed'})
 
     if __name__ == '__main__':
         # Change host and port to use secrets

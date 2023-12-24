@@ -2,7 +2,7 @@ import torch
 from transformers import DetrImageProcessor, DetrForObjectDetection
 import matplotlib.pyplot as plt
 import numpy as np
-
+from PIL import Image
 processor = DetrImageProcessor.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
 model = DetrForObjectDetection.from_pretrained("facebook/detr-resnet-50", revision="no_timm")
 
@@ -16,7 +16,7 @@ def detect_objects(image, threshold=0.9):
     results = processor.post_process_object_detection(outputs, target_sizes=target_sizes, threshold=threshold)[0]
 
     # Convert the image to NumPy array for Matplotlib
-    image_np = temp_image.numpy().astype(np.uint8)
+    image_np = np.array(temp_image).astype(np.uint8)
 
     fig, ax = plt.subplots(1)
     ax.imshow(image_np)
@@ -36,5 +36,14 @@ def detect_objects(image, threshold=0.9):
         ax.text(x, y - 20, text, fontsize=12, color='lime', weight='bold')
 
     plt.axis("off")
-    plt.close()
-    return temp_image
+
+    # Convert the plot to a NumPy array
+    fig.canvas.draw()
+    image_array = np.array(fig.canvas.renderer.buffer_rgba())
+
+    plt.close(fig)
+    image_pil = Image.fromarray(image_array)
+    image_rgb = image_pil.convert('RGB')
+    image_array_rgb = np.array(image_rgb)
+
+    return image_array_rgb
