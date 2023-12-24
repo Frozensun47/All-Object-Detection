@@ -19,10 +19,15 @@ host = st.secrets['host']
 port = st.secrets['port']
 upload_folder = st.secrets['upload_folder']
 
-# Streamlit app title
-st.title('Server for Object Detection')
+# Streamlit app title with styling
+st.title('🔍 Object Detection Server')
+st.markdown(
+    """
+    *An interactive server for object detection powered by DETR (DEtection Transfomer).*  
+    """
+)
 
-# Additional Details
+# Additional Details with styling
 st.write(
     """
     This server uses a Flask backend to perform object detection using a PyTorch transformer model, specifically the DETR (DEtection Transfomer).
@@ -33,9 +38,9 @@ st.write(
     """
 )
 
-# Button to start the server
-if st.button("Start Server"):
-    st.write("Server started. Listening for incoming requests.")
+# Button to start the server with styling
+if st.button("🚀 Start Server"):
+    st.success("Server started. Listening for incoming requests.")
 
     # Flask app initialization
     def get_app():
@@ -79,7 +84,7 @@ if st.button("Start Server"):
         # Run the Flask app with specified host and port
         app.run(host=host, port=port)
 
-# Footer
+# Footer with styling
 st.markdown(
     """
     ***
