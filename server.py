@@ -27,7 +27,7 @@ st.markdown(
     """
 )
 
-st.head("[Detect Objects](https://detectobjects.streamlit.app/)")
+st.header("[Detect Objects](https://detectobjects.streamlit.app/)")
 
 # Additional Details with styling
 st.write(
