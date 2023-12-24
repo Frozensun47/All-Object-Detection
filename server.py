@@ -37,10 +37,10 @@ st.write(
     To use this service, upload an image by clicking [here](https://detectobjects.streamlit.app/), and the server will provide the detected objects in the uploaded image.
     """
 )
-
+server_placeholder = st.empty()
 # Button to start the server with styling
 if st.button("🚀 Start Server"):
-    st.success("Server started. Listening for incoming requests.")
+    server_placeholder.success("Server started. Listening for incoming requests.")
 
     # Flask app initialization
     def get_app():
