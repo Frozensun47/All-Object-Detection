@@ -84,6 +84,10 @@ if st.button("🚀 Start Server"):
         # Run the Flask app with specified host and port
         app.run(host=host, port=port)
 
+image_url = 'https://media.licdn.com/dms/image/D4D03AQEMw8cjnd7zbQ/profile-displayphoto-shrink_400_400/0/1698397499956?e=1709164800&v=beta&t=0sbwPaWNNHLf2TyPrQVbe8KzMLBiqsqFLQ-USqL0ocs'
+
+# Display the image beside your name
+st.image(image_url, caption='Your LinkedIn Profile Picture', width=100)
 # Footer with styling
 st.markdown(
     """
