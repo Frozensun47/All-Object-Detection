@@ -46,7 +46,26 @@ content_placeholder = st.empty()
 # Button to start the server with styling
 if st.button("🚀 Start Server"):
     server_placeholder.success("Server started. Listening for incoming requests.")
-
+    line_placeholder.markdown(
+        """
+        ***
+    """
+    )
+    col1 ,col2,col3 = st.columns((2,4,1))
+    # Display the image beside your name
+    with col1:
+        dp_placeholder.image(image_url, width=100)
+    # Footer with styling
+    with col2:
+        content_placeholder.markdown(
+            """
+            ### About the Author
+            **Name:** Sagar Srivastava  
+            **Affiliation:** IIT BHU Varanasi  
+            **Links:** [GitHub](https://github.com/Frozensun47) | [Portfolio](https://sites.google.com/itbhu.ac.in/sagarsrivastava/about) | [Medium](https://sagar-srivastava.medium.com/) | [Kaggle](https://www.kaggle.com/sagarsrivastava24/competitions) | [Twitter](https://twitter.com/Frozensun47)
+            """
+        )
+    
     # Flask app initialization
     def get_app():
         return Flask(__name__)
